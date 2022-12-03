@@ -1,0 +1,45 @@
+::ng-deep .fc-view-harness a{
+  color: black;
+  text-decoration: none;
+}
+::ng-deep  .fc-daygrid-day{
+  border: 1px solid black !important;
+}
+
+::ng-deep  .fc-col-header-cell{
+  border: 1px solid black !important;
+}
+::ng-deep  .fc-view-harness{
+  border: 1px solid black !important;
+}
+::ng-deep .fc-timegrid-slot{
+  display:none !important;
+}
+::ng-deep .fc-timegrid-cols{
+  display:none !important;
+}
+// ::ng-deep .fc-scrollgrid-sync-table{
+//   height: 161px !important;
+// }
+// ::ng-deep .fc-timegrid{
+//   height: 200px !important;
+// }
+
+::ng-deep .fc-timegrid-axis-frame{
+  display: none !important;
+}
+// ::ng-deep .fc-scrollgrid-shrink{
+//   display: none !important;
+// }
+// ::ng-deep .fc-col-header-cell{
+//   display: none !important;
+// }
+// ::ng-deep .fc-timegrid-body{
+//   display: none !important;
+// }
+full-calendar{
+  margin: 7px;
+}
+::ng-deep .fc-daygrid-event{
+  margin: 4px 7px;
+}

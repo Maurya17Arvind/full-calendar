@@ -1,0 +1,96 @@
+<div id="overlay-sidebar">
+    <nav id="sidebar">
+        <div class="sidebar-p-r">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" [ngClass]="{'disable-block': isDisableForm}">
+                <div class="px-md-12 px-lg-0 py-lg-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+                        <div class="col-sm-1 col-1 text-end fs-3">
+                            <i class="fa fa-times font-20 mr-2" (click)="onCloseDrawer()" style="color: #6c6c6c"
+                                aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <form autocomplete="off" [formGroup]="popUpForm" (ngSubmit)="save()">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col-sm-6">
+                                        <label for="eventName" class="form-label">EVENT NAME</label>
+                                    </div>
+                                    <div class="col-sm-6 text-end">
+                                        <label for="favcolor" class="text-end">Add Background Color</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <input type="text" class="form-control" id="eventName"
+                                            placeholder="Enter Event Name ..." formControlName="eventName">
+                                        <div class="text-danger mt-2"
+                                            *ngIf="fControl['eventName'].touched && fControl['eventName'].errors?.['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> Event name is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="color" id="favcolor" name="favcolor" formControlName="colorCode">
+                                        <div class="text-danger mt-2"
+                                            *ngIf="fControl['colorCode'].touched && fControl['colorCode'].errors?.['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> Select BGC
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-sm-3">
+                                    <label for="startDate" class="form-label">START DATE</label>
+                                    <input type="text" class="form-control" id="startDate" formControlName="startDate" [defaultValue]="startDate" (click)="getDate()">
+                                    <div class="text-danger mt-2"
+                                        *ngIf="fControl['startDate'].touched && fControl['startDate'].errors?.['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> Select start date.
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-sm-3">
+                                    <label for="startTime" class="form-label">START TIME</label>
+                                    <input type="text" class="form-control" id="startTime" formControlName="startTime">
+                                    <div class="text-danger mt-2"
+                                        *ngIf="fControl['startTime'].touched && fControl['startTime'].errors?.['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> Select start time.
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-sm-3">
+                                    <label for="endDate" class="form-label">END DATE</label>
+                                    <input type="text" class="form-control" id="endDate" formControlName="endDate">
+                                    <div class="text-danger mt-2"
+                                        *ngIf="fControl['endDate'].touched && fControl['endDate'].errors?.['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> Select end date.
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-sm-3">
+                                    <label for="endTime" class="form-label">END TIME</label>
+                                    <input type="text" class="form-control" id="endTime" formControlName="endTime">
+                                    <div class="text-danger mt-2"
+                                        *ngIf="fControl['endTime'].touched && fControl['endTime'].errors?.['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> Select end time.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-1">
+                                <textarea name="descrption" id="descrption" class="form-control"
+                                    placeholder="Description....." cols="30" rows="10"
+                                    formControlName="descrption"></textarea>
+                                <div class="text-danger mt-2"
+                                    *ngIf="fControl['descrption'].touched && fControl['descrption'].errors?.['required']">
+                                    <i class="fas fa-exclamation-triangle"></i> Please write some descrption about
+                                    event.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
