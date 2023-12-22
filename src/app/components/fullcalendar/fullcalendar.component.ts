@@ -43,13 +43,11 @@ export class FullcalendarComponent implements OnInit, AfterViewInit {
   }
 
   public customEvent(): void {
-    // const calendarEl:any = document.getElementById('a_calendar');
-    // console.log('calendarEl :>> ', calendarEl);
       this.calendarOptions = {
-        plugins: [dayGridPlugin],
+        plugins: [dayGridPlugin,interactionPlugin], //interactionPlugin this plugin is use for active the calendar events
         events: [],
         initialView: 'dayGridMonth',
-        // dateClick: this.handleDateClick.bind(this),
+        dateClick: this.handleDateClick.bind(this),
         // customButtons: {
         //   btnBloquearAgenda: {
         //     icon: 'fa fa-lock',
@@ -180,6 +178,7 @@ export class FullcalendarComponent implements OnInit, AfterViewInit {
     }
   }
   handleDateSelect(selectInfo: any) {
+    console.log('selectInfo :>> ', selectInfo);
     this.currentData = selectInfo;
     this.showPromoModal = true;
     // alert('Hello');

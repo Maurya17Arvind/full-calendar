@@ -1,3 +1,4 @@
+import interactionPlugin from '@fullcalendar/interaction';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateSelectArg, EventClickArg } from '@fullcalendar/core';
@@ -28,7 +29,7 @@ export class TimeviewComponent implements OnInit {
 
   createTimeLine(){
     this.timeOptions = {
-      plugins: [timeGridPlugin],
+      plugins: [timeGridPlugin,interactionPlugin],
       events: this.eventData,
       initialView: 'timeGridWeek',
       dateClick: this.handleDateSelect.bind(this),

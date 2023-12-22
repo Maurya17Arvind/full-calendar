@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ClosePopupServiceService } from 'src/app/service/close-popup-service.service';
 
@@ -16,11 +16,11 @@ export class EventformComponent implements OnInit {
   public teamFormData: any;
   public isDisableForm: boolean = false;
   public showPromoModal!: boolean;
-  public popUpForm!: FormGroup;
+  public popUpForm!: UntypedFormGroup;
   public defaultDateAndTime: any;
   public startDate!: any;
 
-  constructor(private colsePopup: ClosePopupServiceService, private fb: FormBuilder) {
+  constructor(private colsePopup: ClosePopupServiceService, private fb: UntypedFormBuilder) {
     this.popUpForm = this.fb.group({
       eventName: ['', [Validators.required]],
       colorCode: ['', [Validators.required]],
