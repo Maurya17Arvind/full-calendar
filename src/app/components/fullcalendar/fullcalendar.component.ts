@@ -35,6 +35,7 @@ export class FullcalendarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.customEvent();
     // this.getData();
+    // $('#prev').css({color:'red'});
   }
 
   ngAfterViewInit(): void {
