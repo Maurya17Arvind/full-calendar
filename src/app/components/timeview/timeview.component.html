@@ -1,0 +1,6 @@
+<div class="row m-4">
+    <div class="col-12">
+        <full-calendar [options]="timeOptions" #calendar></full-calendar>
+    </div>
+</div>
+<app-eventform *ngIf="showPromoModal" (showDrawer)="onShowDrawer($event)" [select]="currentData" (formDate)="getFormData($event)"></app-eventform>

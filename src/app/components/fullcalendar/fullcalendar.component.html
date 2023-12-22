@@ -1,6 +1,6 @@
-<div class="row justify-content-center">
+<div class="justify-content-center">
     <div class="col-sm-12 mt-2">
-        <div class="row justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="col-sm-4 justify-content-between d-flex">
                 <div>
                     <button class="btn btn-primary" (click)="nextDate(-1)">Prev</button>
@@ -13,20 +13,12 @@
                 </div>
             </div>
         </div>
-        <full-calendar [options]="calendarOptions" (eventResize)="onEventResize($event)" (eventDrop)="onEventDrop($event)" #calendar>
+        <full-calendar [options]="calendarOptions" id="a_calendar" (eventResize)="onEventResize($event)"
+            (eventDrop)="onEventDrop($event)" #calendar>
         </full-calendar>
-        <!-- <full-calendar [options]="timeOptions" id="m_calendar">
-        </full-calendar> -->
-        <app-network-graph></app-network-graph>
+        <!-- <app-network-graph></app-network-graph> -->
     </div>
 </div>
 
-<app-eventform *ngIf="showPromoModal" (showDrawer)="onShowDrawer($event)" [select]="currentData" (formDate)="getFormData($event)"></app-eventform>
-
-<!-- <div style="height:100px;">
-    <div class="d-flex justify-content-bottom">
-        <div>
-            <input type="text" class="form-control">
-        </div>
-    </div>
-</div> -->
+<app-eventform *ngIf="showPromoModal" (showDrawer)="onShowDrawer($event)" [select]="currentData"
+    (formDate)="getFormData($event)"></app-eventform>

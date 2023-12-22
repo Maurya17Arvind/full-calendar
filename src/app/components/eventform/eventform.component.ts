@@ -39,19 +39,19 @@ export class EventformComponent implements OnInit {
     console.log('this.select :>> ', this.select);
 
     this.defaultDateAndTime = {
-      startDate: new Date(this.select.startStr),
-      startTime: this.select.start,
-      endDate: new Date(this.select.endStr),
-      endTime: this.select.end
+      startDate: new Date(this.select.startStr ? this.select.startStr : this.select.dateStr),
+      startTime: this.select.start ? this.select.start : this.select.date,
+      endDate: new Date(this.select.endStr ? this.select.endStr : this.select.dateStr),
+      endTime: this.select.end ? this.select.end : this.select.date
     }
 
     this.popUpForm.patchValue({
       eventName: this.select?._def?.title ? this.select._def.title : '',
       colorCode: this.select?.backgroundColor,
-      startDate: this.select.id ? moment(this.select._instance.range.start).format('YYYY-MM-DD') : moment(this.defaultDateAndTime.startDate).format('YYYY-MM-DD'),
-      startTime: this.select.id ? moment(this.select._instance.range.start).format('h:mm A') : moment(this.defaultDateAndTime.startTime).format('h:mm a'),
-      endDate: this.select.id ? moment(this.select._instance.range.end).format('YYYY-MM-DD') : moment(this.defaultDateAndTime.endDate).format('YYYY-MM-DD'),
-      endTime: this.select.id ? moment(this.select._instance.range.end).format('h:mm A') : moment(this.defaultDateAndTime.endTime).format('h:mm a'),
+      startDate: this.select.id ? moment(this.select.start).format('YYYY-MM-DD') : moment(this.defaultDateAndTime.startDate).format('YYYY-MM-DD'),
+      startTime: this.select.id ? moment(this.select.start).format('hh:mm:ss') : moment(this.defaultDateAndTime.startTime).format('hh:mm:ss'),
+      endDate: this.select.id ? moment(this.select.end ? this.select.end : this.select.start).format('YYYY-MM-DD') : moment(this.defaultDateAndTime.endDate).format('YYYY-MM-DD'),
+      endTime: this.select.id ? moment(this.select.end ? this.select.end : this.select.start).format('hh:mm:ss') : moment(this.defaultDateAndTime.endTime).format('hh:mm:ss'),
       descrption: this.select?._def?.extendedProps.description ? this.select?._def?.extendedProps.description : ''
     });
 

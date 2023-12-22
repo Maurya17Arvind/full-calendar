@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, FullCalendarComponent } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 // import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { ClosePopupServiceService } from 'src/app/service/close-popup-service.service';
 import * as moment from "moment";
 import * as momentTimezone from "moment-timezone";
 import * as _ from "lodash";
+import { Calendar } from '@fullcalendar/core';
 declare var $: any;
 @Component({
   selector: 'app-fullcalendar',
   templateUrl: './fullcalendar.component.html',
   styleUrls: ['./fullcalendar.component.scss']
 })
-export class FullcalendarComponent implements OnInit {
+export class FullcalendarComponent implements OnInit, AfterViewInit {
 
 
 
@@ -22,99 +24,62 @@ export class FullcalendarComponent implements OnInit {
   public currentData: any;
   public currentEventId: any;
   public formData: any;
-  public calendarOptions: CalendarOptions = {};
-  public timeOptions: CalendarOptions = {};
+  public calendarOptions: any = {};
+  public timeOptions: any = {};
   @ViewChild('calendar') calendar!: FullCalendarComponent;
 
-  public eventData:any;
-
-  // public calendarOptions: CalendarOptions = {
-  //   initialView: 'dayGridMonth',
-  //   // dateClick: this.handleDateClick.bind(this),
-  //   events: this.eventData,
-  //   customButtons: {
-  //     btnBloquearAgenda: {
-  //       icon: 'fa fa-lock',
-  //       click: function () {
-  //         alert('clicked the custom button!');
-  //       }
-  //     }
-  //   },
-  //   // headerToolbar: {
-  //   //   left: 'prev,next today btnBloquearAgenda dayGridMonth',
-  //   //   right: ''
-  //   // },
-  //   editable: true,
-  //   selectable: true,
-  //   selectMirror: true,
-  //   dayMaxEvents: true,
-  //   headerToolbar: false,
-  //   select: this.handleDateSelect.bind(this),
-  //   eventClick: this.handleEventClick.bind(this),
-  // };
-  
+  public eventData:any = [];
   
   constructor(private dataService:ClosePopupServiceService) { }
 
   ngOnInit(): void {
     this.customEvent();
-    this.getData()
+    // this.getData();
+  }
+
+  ngAfterViewInit(): void {
+    // this.customEvent();
+    
   }
 
   public customEvent(): void {
-    this.calendarOptions = {
-      events: [],
-      initialView: 'dayGridMonth',
-      // dateClick: this.handleDateClick.bind(this),
-      customButtons: {
-        btnBloquearAgenda: {
-          icon: 'fa fa-lock',
-          click: function () {
-            alert('clicked the custom button!');
-          }
-        }
-      },
-      editable: true,
-      contentHeight: '1200px',
-      selectable: true,
-      selectMirror: true,
-      eventTextColor :'black',
-      // dayMaxEvents: true, //this is for show more button
-      fixedWeekCount: false, //this is for show one week extra
-      headerToolbar: false,
-      select: this.handleDateSelect.bind(this),
-      eventClick: this.handleEventClick.bind(this),
-      eventDrop: this.onEventDrop.bind(this),
-      eventResize: this.onEventResize.bind(this),
-    };
-    // this.timeOptions = {
-    //   events: this.eventData,
-    //   initialView: 'timelineYear',
-    //   dateClick: this.handleDateClick.bind(this),
-    //   customButtons: {
-    //     btnBloquearAgenda: {
-    //       icon: 'fa fa-lock',
-    //       click: function () {
-    //         alert('clicked the custom button!');
-    //       }
-    //     }
-    //   },
-    //   views:{
-    //     duration: { weeks: 2 },
-    //   },
-    //   editable: true,
-    //   contentHeight: 'auto',
-    //   selectable: true,
-    //   selectMirror: true,
-    //   // dayMaxEvents: true,
-    //   // allDaySlot:false,
-    //   headerToolbar: false,
-    //   select: this.handleDateSelect.bind(this),
-    //   eventClick: this.handleEventClick.bind(this),
-    //   eventDrop: this.onEventDrop.bind(this),
-    //   eventResize: this.onEventResize.bind(this),
-    // }
-    $("#m_calendar").find(".fc-timegrid").find(".fc-daygrid-body tr td:first-child").remove()
+    // const calendarEl:any = document.getElementById('a_calendar');
+    // console.log('calendarEl :>> ', calendarEl);
+      this.calendarOptions = {
+        plugins: [dayGridPlugin],
+        events: [],
+        initialView: 'dayGridMonth',
+        // dateClick: this.handleDateClick.bind(this),
+        // customButtons: {
+        //   btnBloquearAgenda: {
+        //     icon: 'fa fa-lock',
+        //     click: function () {
+        //       alert('clicked the custom button!');
+        //     }
+        //   }
+        // },
+        editable: true,
+        contentHeight: '1200px',
+        selectable: true,
+        selectMirror: true,
+        eventTextColor :'black',
+        firstDay:6,
+        weekNumbers: true,
+        // dayMaxEvents: true, //this is for show more button
+        fixedWeekCount: false, //this is for show one week extra
+        headerToolbar: false,
+        select: this.handleDateSelect.bind(this),
+        eventClick: this.handleEventClick.bind(this),
+        // eventDrop: this.onEventDrop.bind(this),
+        // eventResize: this.onEventResize.bind(this),
+        // eventContent:(event)=>{
+        //   console.log('event :>> ', event);
+        // }
+        // eventDidMount: (event)=>{
+        //   this.upDateCalenderCss(event);
+        // },
+      };
+    // $("#m_calendar").find(".fc-timegrid").find(".fc-daygrid-body tr td:first-child").remove();
   }
 
   onEventResize(event:any): void{
@@ -137,6 +102,7 @@ export class FullcalendarComponent implements OnInit {
 
     this.dataService.getPromoData().subscribe((res:any)=>{
       this.eventData = this.createCalenderPromoObjs(res['promos']);
+      console.log('this.eventData :>> ', this.eventData);
       setTimeout(() => {
       this.calendar.getApi().addEventSource(this.eventData);
     }, 0);
@@ -145,6 +111,60 @@ export class FullcalendarComponent implements OnInit {
 
   public removeAllEvents(){
     this.calendar.getApi().removeAllEvents();
+  }
+
+  upDateCalenderCss(event: any) {
+    const eventData = event.event._def.extendedProps;
+    const element = event.el;
+    if (eventData.recurrence) {
+      $(element)
+        .find(".fc-event-title")
+        .before(
+          '<i class="fa fa-refresh" style="color:black; margin-top:5px;" aria-hidden="true"></i> '
+        );
+    }
+
+    if (element.classList.contains("fc-daygrid-event")) {
+      $(".fc-daygrid-event").data("content", eventData.description);
+      $(".fc-daygrid-event").data("placement", "top");
+      // mApp.initPopover(element);
+    } else if (element.classList.contains("fc-time-grid-event")) {
+      element
+        .find(".fc-event-title")
+        .append(
+          '<div class="fc-description">' + eventData.description + "</div>"
+        );
+    } else if (element.find(".fc-list-item-title").length !== 0) {
+      element
+        .find(".fc-list-item-title")
+        .append(
+          '<div class="fc-description">' + eventData.description + "</div>"
+        );
+    }
+
+    if (!event.is_holiday && eventData.description) {
+      const dateAndTime = `${moment(
+        `${eventData["from_date"]} ${eventData["start_time"]}`
+      ).format("LLL")} - ${moment(
+        `${eventData["to_date"]} ${eventData["end_time"]}`
+      ).format("LLL")}`;
+      const promoDescription = eventData.description
+        ? `<div class="tooltip-promo-list"><i class="fa fa-file-text-o"></i><div>${eventData.description.replace(
+            /'/g,
+            ""
+          )}</div></div>`
+        : ``;
+      const promoName = `<div class="tooltip-promo-name" style="background-color:${
+        event.backgroundColor
+      };">${eventData.name.replace(/'/g, "")}</div>`;
+      $(element).find(".fc-event-title")
+        .append(` <i class="fa fa-file-text-o tooltips" data-placement="bottom" 
+          data-original-title='${promoName}<div class="tooltip-promo-list"><i class="fa fa-calendar-check-o"></i><p>${dateAndTime}</p></div>${promoDescription}</div>'></i>`);   
+      //  show tooltip when company has more promos
+      // $(element).find(".tooltips").tooltip({
+      //   html: true,
+      // }); 
+    }
   }
   // handleEventClick(clickInfo: EventClickArg) {
   //   if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -159,21 +179,21 @@ export class FullcalendarComponent implements OnInit {
       this.calendar.getApi().prev();
     }
   }
-  handleDateSelect(selectInfo: DateSelectArg) {
+  handleDateSelect(selectInfo: any) {
     this.currentData = selectInfo;
     this.showPromoModal = true;
-    alert('Hello')
+    // alert('Hello');
     // selectInfo.event.remove();
   }
 
-  handleEventClick(clickInfo: EventClickArg) {
+  handleEventClick(clickInfo: any) {
     const isTitle = clickInfo.event._def.title;
     this.currentEventId = clickInfo.event._def.publicId;
     if (isTitle) {
       this.showPromoModal = true;
       this.currentData = clickInfo.event;
     }
-    // clickInfo.event.remove();
+    clickInfo.event.remove();
   }
 
 
@@ -181,31 +201,22 @@ export class FullcalendarComponent implements OnInit {
     this.showPromoModal = false;
   }
 
+  getCalendar(){
+    return this.calendar.getApi();
+  }
 
   public getFormData(e: any): void {
-    var id = this.eventData.length + 1;
-    console.log('this.currentData', this.currentData)
-    if (this.currentEventId) {
-      const calendarApi1 = this.currentData._context.viewApi.calendar;
-      calendarApi1.updateEvent({
-        id: id?.toString(),
-        title: e.eventName,
-        start: e.startDate,
-        end: e.endDate,
-        color: e.colorCode,
-        description: e.descrption
-      })
-    } else {
-      const calendarApi = this.currentData.view.calendar;
-      calendarApi.addEvent({
-        id: id?.toString(),
-        title: e.eventName,
-        start: e.startDate,
-        end: e.endDate,
-        color: e.colorCode,
-        description: e.descrption
-      });
-    }
+    var id = this.eventData.length ? this.eventData.length + 1 : 1;
+    const event = this.getCalendar().getEventById(this.currentEventId);
+    if (event) event.remove();
+    this.getCalendar().addEvent({
+      id: id?.toString(),
+      title: e.eventName,
+      start: e.startDate,
+      end: e.endDate,
+      color: e.colorCode,
+      description: e.descrption
+    });
 
 
     // this.formData = {
@@ -220,7 +231,7 @@ export class FullcalendarComponent implements OnInit {
 
     // this.customEvent();
     // console.log('this.formData', this.formData)
-    
+
   }
 
   public getTitle(promo:any) {
@@ -246,7 +257,6 @@ export class FullcalendarComponent implements OnInit {
     obj.id = promo.id;
     obj.name = promo.name;
     obj.title = this.getTitle(promo);
-
     obj.from_date = promo["from_date"];
     obj.to_date = promo["to_date"];
     obj.start = new Date(

@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import data from '../../assets/data.json'
+import data from '../../assets/data.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClosePopupServiceService {
 
-  public token:any = "5cd6d0b2f8c210f645e9f6a270033012c5c97bd4";
+  public token:any = "932ca8ed47b95bcf3232324da7315eb7dead541b";
   public header = new HttpHeaders().set('Authorization', this.token);
   constructor(private http:HttpClient) { 
    
@@ -21,9 +21,9 @@ export class ClosePopupServiceService {
   public getPromoData(){
     const params = {
       "filter_options": {},
-      "company": 622,
-      "firstday": "2022-08-28",
-      "lastday": "2022-12-31",
+      "company": 623,
+      "firstday": "2022-08-27",
+      "lastday": "2022-09-30",
       "monthno": 12,
       "year": 2022,
       "page": 1,
